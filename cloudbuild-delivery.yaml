@@ -27,12 +27,16 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
+  # Connect to the repository
   - name: 'gcr.io/cloud-builders/git'
-    id: Clone Repo
-    args: ['clone', ' --recurse-submodules', 'git@github.com:jeantardelli/gitops-style-cicd-with-gcp-env-repo.git']
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+    id: Connect to GitHub
+    args:
+      - clone
+      - --recurse-submodules
+      - git@github.com:jeantardelli/gitops-style-cicd-with-gcp-env-repo.git
+    volumes:
+      - name: 'ssh'
+        path: /root/.ssh
 
   # This step copies the applied manifest to the production branch
   # The COMMIT_SHA variable is automatically replaced by Cloud Build.
