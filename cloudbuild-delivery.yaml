@@ -37,7 +37,8 @@ steps:
     - |
       set -x && \
       # Configure Git to create commits with Cloud Build's service account
-      git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+      git config --global user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+      git config --global user.name jeantardelli && \
       # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
       git fetch origin production && git checkout production && \
       git checkout $COMMIT_SHA kubernetes.yaml && \
