@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-cloudbuild
-        image: europe-west1-docker.pkg.dev/cicd-data-engineer-pipelines/my-repository/hello-cloudbuild:8261506
+        image: europe-west1-docker.pkg.dev/cicd-data-engineer-pipelines/my-repository/hello-cloudbuild:0f9a871
         ports:
         - containerPort: 8080
 ---
