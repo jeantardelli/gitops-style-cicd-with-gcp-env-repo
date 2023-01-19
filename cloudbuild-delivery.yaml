@@ -29,10 +29,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/git'
     id: Clone Repo
-    entrypoint: git
-    args:
-    - clone
-    - --recurse-submodules git@github.com:jeantardelli/gitops-style-cicd-with-gcp-env-repo.git
+    args: ['clone', ' --recurse-submodules', 'git@github.com:jeantardelli/gitops-style-cicd-with-gcp-env-repo.git']
   volumes:
   - name: 'ssh'
     path: /root/.ssh
