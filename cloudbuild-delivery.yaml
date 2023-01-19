@@ -47,6 +47,7 @@ steps:
     - '-c'
     - |
       set -x && \
+      git config --global url."git@github.com:".insteadOf "https://github.com/" && \
       # Configure Git to create commits with Cloud Build's service account
       git config --global user.email "jeantardelli@gmail.com" && \
       # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
