@@ -29,6 +29,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/git'
     id: Clone Repo
+    entrypoint: git
     args:
       - clone
       - --recurse-submodules
