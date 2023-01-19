@@ -20,12 +20,22 @@ steps:
     - -c
     - |
       echo "$$SSH_KEY" >> /root/.ssh/id_rsa
-      chmod 400 /root/.ssh/id_rsa
+      chmod 600 /root/.ssh/id_rsa
       ssh-keyscan -t rsa github.com > known_hosts.github
       mv known_hosts.github /root/.ssh/known_hosts
     volumes:
     - name: 'ssh'
       path: /root/.ssh
+
+    - name: 'gcr.io/cloud-builders/git'
+    args:
+      - clone
+      - --recurse-submodules
+      - git@github.com:jeantardelli/gitops-style-cicd-with-gcp-env-repo
+    volumes:
+      - name: 'ssh'
+        path: /root/.ssh
+
 
   # This step copies the applied manifest to the production branch
   # The COMMIT_SHA variable is automatically replaced by Cloud Build.
@@ -37,7 +47,7 @@ steps:
     - |
       set -x && \
       # Configure Git to create commits with Cloud Build's service account
-      git config --global user.email jeantardelli@gmail.com && \
+      git config --global user.email $(git log --format='%an <%ae>' -n 1 HEAD | sed 's/.*\<\([^>]*\)\>.*/\1/g') && \
       # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
       git fetch origin production && git checkout production && \
       git checkout $COMMIT_SHA kubernetes.yaml && \
